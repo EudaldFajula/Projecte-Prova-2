@@ -1,90 +1,72 @@
-﻿/*
-//PRE: rep 3 números
-program validate_num:							
-	var 
-		int dia;
-        int mes;
-        int any;
-        bool validat;
-	endvar
-	write("Introdueix el dia, mes i any");
-	if (day < 1 || day > 31) then
-		write("Introdueix el dia, mes i any");
-
-	if (month < 1 || month > 12) then
-		int totalDaysMonth = 0;
-
-	if (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12 ) then
-		totalDaysMonth = 31; break;
-
-	else
-		totalDaysMonth = 30; break;
-
-	if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) then
-		totalDaysMonth = 29;
-
-	else totalDaysMonth = 28;
-		break;
-endprogram	
-//POST: retorna si els números (dd, mm, yyyy) estan dins del rang de data corresponent
-*/
-
-using System;
+﻿using System;
 
 namespace Prova_Practica2
 {
-	public static class Activitat3
-	{
-		public static bool ValidateNum(int min, int max, int input)
+	public static class Activitat5
+	{	
+		public static int[] BubbleSort(int[] arrayBubbleSort)
 		{
-			return (input < min || input > max);
-        }
-		public static int ChangeTotalDaysMonthByMonth(int month)
-		{
-            int[] monthTotalDays = { 1, 3, 5, 7, 8, 10, 12 };
-            int totalDaysMonth = 0;
-            for (int i = 0; i < monthTotalDays.Length; i++)
-            {
-                if (month == monthTotalDays[i]) { totalDaysMonth = 30; } else { totalDaysMonth = 31; }
+			for (int i = 0; i < arrayBubbleSort.Length; i++)
+			{
+				for (int j = i + 1; j < arrayBubbleSort.Length; j++)
+				{
+					if (arrayBubbleSort[i] < arrayBubbleSort[j])
+					{
+						int aux = arrayBubbleSort[i];
+						arrayBubbleSort[i] = arrayBubbleSort[j];
+						arrayBubbleSort[j] = aux;
+                    }
+				}
+
             }
-			return totalDaysMonth;
+			return arrayBubbleSort;
+		}
+        public static bool BinarySearch(int[] array, int numSearch)
+        {
+			int i = 0;
+            while (i < array.Length)
+			{
+				if (array[i] == numSearch)
+				{
+					return true;
+				}
+				else
+				{
+					i++;
+				}
+            }
+			return false;
         }
-		public static int ChangeTotalDaysMonthByYear(int year, int totalDaysMonth)
+        public static void Main()
 		{
-            if (year % 400 == 0) { totalDaysMonth = 29; } else { totalDaysMonth = 28; }
-			return totalDaysMonth;
-        }
-		public static void Main()
-		{
-			//Constants
-			const string AskDay = "Introdueix el dia: ";
-			const string AskMonth = "Introdueix el mes: ";
-			const string AskYear = "Introdueix el any: ";
+			//Constant strings
+			const string Msg = "Introdueix ara 20 valors: ";
+			const string Msg1Value = "Introdueix el valor: ";
+			const string AskSearchNum = "Quin valor vols buscar? ";
+			const string NumFound = "El teu valor esta dintre de la llista!!";
+			const string NumNotFound = "El teu valor no esta dintre de la llista :(";
 			//Variables
-            int day;
-            int month;
-            int year;
+			int[] arrayNumsUser = new int[20];
+			Console.WriteLine(Msg);
 			try
 			{
-				//Ask to introduce the days
-				do
+				//Afegir numeros al array
+				for (int i = 0; i < arrayNumsUser.Length; i++)
 				{
-					Console.WriteLine(AskDay);
-					day = Convert.ToInt32(Console.ReadLine());
-				} while (ValidateNum(1,31,day));
-				//Ask to introduce the month
-				do
+					Console.WriteLine(Msg1Value);
+					arrayNumsUser[i] = Convert.ToInt32(Console.ReadLine());
+				}
+				//Ordernar el array
+                arrayNumsUser = BubbleSort(arrayNumsUser);
+				//Imprimir el array ordenar
+				for (int i = 0;i < arrayNumsUser.Length; i++)
 				{
-					Console.WriteLine(AskMonth);
-					month = Convert.ToInt32(Console.ReadLine());
-				}while (ValidateNum(1, 12, month));
-				//Ask to introduce the year
-                Console.WriteLine(AskYear);
-				year = Convert.ToInt32(Console.ReadLine());
-				//Search how many total days has his month
-                int totalDaysMonth = ChangeTotalDaysMonthByMonth(month);
-				//See if the year change the total days of the month
-				totalDaysMonth = ChangeTotalDaysMonthByYear(year, totalDaysMonth);
+					Console.Write($"{arrayNumsUser[i]}, ");
+				}
+				Console.WriteLine($"\n{AskSearchNum}");
+				int numSearch = Convert.ToInt32(Console.ReadLine());
+				//Avisar si el numero que a entrat esta en el array o no
+				Console.WriteLine(BinarySearch(arrayNumsUser, numSearch) ? NumFound : NumNotFound);
             }
 			catch (FormatException) 
 			{
