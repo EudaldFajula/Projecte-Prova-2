@@ -2,76 +2,59 @@
 
 namespace Prova_Practica2
 {
-	public static class Activitat5
+	public class Activitat6
 	{	
-		public static int[] BubbleSort(int[] arrayBubbleSort)
+        public static bool ContrasenyaLength(string password)
 		{
-			for (int i = 0; i < arrayBubbleSort.Length; i++)
+			if (password.Length < 6 || password.Length > 15)
 			{
-				for (int j = i + 1; j < arrayBubbleSort.Length; j++)
-				{
-					if (arrayBubbleSort[i] < arrayBubbleSort[j])
-					{
-						int aux = arrayBubbleSort[i];
-						arrayBubbleSort[i] = arrayBubbleSort[j];
-						arrayBubbleSort[j] = aux;
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+        }
+		public static bool ContrasenyaValues(string password)
+		{
+			char[] bannedValues = {'@','/','*','^'};
+            for (int i = 0; i < password.Length; i++)
+            {
+                for (int j = 0; j < bannedValues.Length; j++)
+                {
+                    if (password[i] == bannedValues[j])
+                    {
+                        return false;
                     }
-				}
+                    else
+                    {
+                        return true;
+                    }
+                }
 
             }
-			return arrayBubbleSort;
+			return false;
+			
 		}
-        public static bool BinarySearch(int[] array, int numSearch)
-        {
-			int i = 0;
-            while (i < array.Length)
+		public static bool ContrasenyaValue(string password)
+		{
+			char[] bannedValues = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+			for (int i = 0; i < bannedValues.Length; i++)
 			{
-				if (array[i] == numSearch)
+				if (password.StartsWith(bannedValues[i]) || password.EndsWith(bannedValues[i]))
 				{
-					return true;
+					return false;
 				}
 				else
 				{
-					i++;
+					return true;
 				}
-            }
-			return false;
-        }
-        public static void Main()
-		{
-			//Constant strings
-			const string Msg = "Introdueix ara 20 valors: ";
-			const string Msg1Value = "Introdueix el valor: ";
-			const string AskSearchNum = "Quin valor vols buscar? ";
-			const string NumFound = "El teu valor esta dintre de la llista!!";
-			const string NumNotFound = "El teu valor no esta dintre de la llista :(";
-			//Variables
-			int[] arrayNumsUser = new int[20];
-			Console.WriteLine(Msg);
-			try
-			{
-				//Afegir numeros al array
-				for (int i = 0; i < arrayNumsUser.Length; i++)
-				{
-					Console.WriteLine(Msg1Value);
-					arrayNumsUser[i] = Convert.ToInt32(Console.ReadLine());
-				}
-				//Ordernar el array
-                arrayNumsUser = BubbleSort(arrayNumsUser);
-				//Imprimir el array ordenar
-				for (int i = 0;i < arrayNumsUser.Length; i++)
-				{
-					Console.Write($"{arrayNumsUser[i]}, ");
-				}
-				Console.WriteLine($"\n{AskSearchNum}");
-				int numSearch = Convert.ToInt32(Console.ReadLine());
-				//Avisar si el numero que a entrat esta en el array o no
-				Console.WriteLine(BinarySearch(arrayNumsUser, numSearch) ? NumFound : NumNotFound);
-            }
-			catch (FormatException) 
-			{
-				Console.WriteLine("Error");
 			}
-        }
-	}
+			return false;
+		}
+		public static void Main()
+		{
+
+		}
+    }
 }
